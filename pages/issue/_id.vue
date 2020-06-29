@@ -29,7 +29,9 @@ export default {
   },
   methods: {
     onClickDelete() {
-      return this.$store.dispatch('issues/deleteIssue', this.$route.params.id)
+      if(confirm(`${this.issue.title.rendered} 이슈를 삭제하시겠습니까?`)){
+        return this.$store.dispatch('issues/deleteIssue', this.$route.params.id)
+      }
     }
   },
   middleware({ store, params }) {

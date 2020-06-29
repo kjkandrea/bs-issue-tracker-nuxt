@@ -1,3 +1,5 @@
+const TEST_KEY = 'Basic YW5kcmVhOlF4RmIgN3V3biAzRHlYIHZkSVAgRDFOeSA2OTRC';
+
 export const state = () => ({
   viewMilestone: 'all',
   issue: {
@@ -84,11 +86,11 @@ export const actions = {
     }
   },
   async deleteIssue({ commit, state }, payload) {
-    // 서버에 게시글 삭제 요청 보냄
     try {
-      //let res = await this.$axios.delete('/delete', payload)
-      alert('Delete 요청 : 콘솔창에서 data를 확인하세요')
-      console.log(payload)
+      let res = await this.$axios.delete(`/v2/issue/${payload}`, {
+        headers: { 'Authorization': TEST_KEY }
+      });
+      this.$router.push('/')
     } catch(err) {
       console.log(err)
     }
