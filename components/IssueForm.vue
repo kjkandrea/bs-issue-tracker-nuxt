@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       failValid: false,
-      category: '',
+      updateId: '',
       formValues: {
         title: '',
         content: ''
@@ -70,24 +70,24 @@ export default {
       const formData = {
         "title": this.formValues.title,
         "date": this.createdDate,
-        "content": this.formValues.content,
-        "category": "open",
+        "content": this.formValues.content
       }
       this.$store.dispatch('issues/createIssue', formData);
     },
     updateRequest() {
       this.updateDate = new Date();
       const formData = {
+        "id": this.updateId,
         "title": this.formValues.title,
-        "date": this.createdDate,
-        "content": this.formValues.content,
-        "category": "open",
+        "content": this.formValues.content
       }
       this.$store.dispatch('issues/updateIssue', formData);
     },
     async dataFetch() {
       try {
         const data = await this.$store.state.issues.issue
+        this.updateId = data.id
+        console.log(this.updateId)
         this.formValues.title = data.title.rendered
         this.formValues.content = data.content.rendered
       } catch(err) {

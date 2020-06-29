@@ -75,14 +75,15 @@ export const actions = {
     }
   },
   async updateIssue({ commit, state }, payload) {
-    // 서버에 게시글 수정 요청 보냄
+    console.log(payload.id);
     try {
-      // let res = await this.$axios.patch('/patch', {
-      //   title: payload.title,
-      //   content: payload.content,
-      // })
-      alert('Patch 요청 : 콘솔창에서 data를 확인하세요')
-      console.log(payload)
+      let res = await this.$axios.put(`/v2/issue/${payload.id}`, {
+        title: payload.title,
+        content: payload.content,
+      }, {
+        headers: { 'Authorization': TEST_KEY }
+      })
+      this.$router.push({name: 'issue-id',  params: { id: res.data.id }})
     } catch(err) {
       console.log(err)
     }
