@@ -1,4 +1,3 @@
-const cookieparser = process.server ? require('cookieparser') : undefined
 const Cookie = process.client ? require('js-cookie') : undefined
 
 export const state = () => ({
@@ -31,4 +30,9 @@ export const actions = {
       console.error(err);
     }
   },
+  async logOut({ commit }, payload) {
+    Cookie.remove('auth')
+    commit('setAuth', null)
+    commit('setNickname', null)
+  }
 }

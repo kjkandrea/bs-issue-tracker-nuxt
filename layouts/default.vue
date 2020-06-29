@@ -18,14 +18,34 @@
         </nuxt-link>
       </v-toolbar-title>
       <v-spacer />
-      <v-avatar v-if="$store.state.user.auth" color="red">
-        <span 
-          style="text-transform:uppercase"
-          class="white--text headline"
+      <v-menu
+        v-if="$store.state.user.auth"
+        v-model="showMenu"
+        offset-y
+      >
+        <template   
+          v-slot:activator="{ on, attrs }"
         >
-          {{$store.state.user.nickname[0]}}
-        </span>
-      </v-avatar>
+          <v-avatar 
+            color="red"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <span 
+              style="text-transform:uppercase"
+              class="white--text headline"
+            >
+              {{$store.state.user.nickname[0]}}
+            </span>
+          </v-avatar>
+        </template>
+
+        <v-list>
+          <v-list-item link @click="onClickLogOut">
+            <v-list-item-title>로그아웃</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <v-btn 
         v-else
         text nuxt to="/login" 
@@ -39,3 +59,18 @@
     </v-main>
   </v-app>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      showMenu: false
+    }
+  },
+  methods: {
+    onClickLogOut() {
+       this.$store.dispatch('user/logOut')
+    }
+  }
+}
+</script>
