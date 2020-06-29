@@ -1,4 +1,4 @@
-const TEST_KEY = 'Basic YW5kcmVhOlF4RmIgN3V3biAzRHlYIHZkSVAgRDFOeSA2OTRC';
+// const TEST_KEY = 'Basic YW5kcmVhOlF4RmIgN3V3biAzRHlYIHZkSVAgRDFOeSA2OTRC';
 
 export const state = () => ({
   viewMilestone: 'all',
@@ -36,7 +36,7 @@ export const mutations = {
 export const actions = {
   async requestIssue({ commit }, payload) {
     try {
-      let res = await this.$axios.get(`/v2/issue/${payload}`);
+      let res = await this.$axios.get(`/wp/v2/issue/${payload}`);
       commit('setStateIssue', res.data);
     } catch(err) {
         console.log(err)
@@ -44,7 +44,7 @@ export const actions = {
   },
   async requestIssues({ commit }, payload) {
     try {
-      let res = await this.$axios.get(`/v2/issue${payload}`);
+      let res = await this.$axios.get(`/wp/v2/issue${payload}`);
       commit('setStateIssues', res.data);
     } catch(err) {
         console.log(err)
@@ -52,7 +52,7 @@ export const actions = {
   },
   async requestMilestones({ commit }) {
     try {
-      let res = await this.$axios.get(`/v2/milestones`);
+      let res = await this.$axios.get(`/wp/v2/milestones`);
       commit('setStateMilestones', res.data);
     } catch(err) {
         console.log(err)
@@ -60,13 +60,13 @@ export const actions = {
   },
   async createIssue({ commit, state }, payload) {
     try {
-      let res = await this.$axios.post('/v2/issue', { 
+      let res = await this.$axios.post('/wp/v2/issue', { 
         title: payload.title,
         content: payload.content,
         milestones: 7,
         status: 'publish'
       }, {
-        headers: { 'Authorization': TEST_KEY }
+        headers: { 'Authorization': `Bearer ${this.state.user.auth}` }
       });
       console.log(res)
       this.$router.push({name: 'issue-id',  params: { id: res.data.id }})
@@ -77,11 +77,11 @@ export const actions = {
   async updateIssue({ commit, state }, payload) {
     console.log(payload.id);
     try {
-      let res = await this.$axios.put(`/v2/issue/${payload.id}`, {
+      let res = await this.$axios.put(`/wp/v2/issue/${payload.id}`, {
         title: payload.title,
         content: payload.content,
       }, {
-        headers: { 'Authorization': TEST_KEY }
+        headers: { 'Authorization': `Bearer ${this.state.user.auth}` }
       })
       this.$router.push({name: 'issue-id',  params: { id: res.data.id }})
     } catch(err) {
@@ -90,8 +90,8 @@ export const actions = {
   },
   async deleteIssue({ commit, state }, payload) {
     try {
-      let res = await this.$axios.delete(`/v2/issue/${payload}`, {
-        headers: { 'Authorization': TEST_KEY }
+      let res = await this.$axios.delete(`/wp/v2/issue/${payload}`, {
+        headers: { 'Authorization': `Bearer ${this.state.user.auth}` }
       });
       this.$router.push('/')
     } catch(err) {
