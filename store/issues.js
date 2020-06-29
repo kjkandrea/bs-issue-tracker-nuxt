@@ -1,11 +1,11 @@
 export const state = () => ({
-  viewCategory: 'all',
+  viewMilestone: 'all',
   issue: {
     title: {
       rendered: ''
     },
     content: {
-      redeered: ''
+      rendered: ''
     }
   },
   issues: [{
@@ -13,12 +13,12 @@ export const state = () => ({
       rendered: ''
     }
   }],
-  categories: []
+  milestones: []
 })
 
 export const mutations = {
-  setStateViewCategory (state, payload) {
-    state.viewCategory = payload;
+  setStateViewMilestone (state, payload) {
+    state.viewMilestone = payload;
   },
   setStateIssue (state, payload) {
     state.issue = payload
@@ -26,8 +26,8 @@ export const mutations = {
   setStateIssues (state, payload) {
     state.issues = payload
   },
-  setStateCategories (state, payload) {
-    state.categories = payload
+  setStateMilestones (state, payload) {
+    state.milestones = payload
   },
 }
 
@@ -48,21 +48,20 @@ export const actions = {
         console.log(err)
     }
   },
-  async requestCategories({ commit }) {
+  async requestMilestones({ commit }) {
     try {
-      let res = await this.$axios.get(`/v2/categories`);
-      commit('setStateCategories', res.data);
+      let res = await this.$axios.get(`/v2/milestones`);
+      commit('setStateMilestones', res.data);
     } catch(err) {
         console.log(err)
     }
   },
   async createIssue({ commit, state }, payload) {
-    // 서버에 게시글 등록 요청 보냄
     try {
       let res = await this.$axios.post('/v2/issue', { 
         title: payload.title,
         content: payload.content,
-        status: "publish"
+        status: 'publish'
       }, {
         headers: { 'Authorization': 'Basic YW5kcmVhOlF4RmIgN3V3biAzRHlYIHZkSVAgRDFOeSA2OTRC' }
       })

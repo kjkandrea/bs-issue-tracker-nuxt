@@ -5,12 +5,10 @@
         view all
       </button>
     </div>
-    <div v-for="tab in categories" :key="tab.id">
-      <template v-if="tab.slug === 'uncategorized' ? false : true">
-        <button @click="onClickTab(tab.name)">
-          {{tab.name}}
-        </button>
-      </template>
+    <div v-for="tab in milestones" :key="tab.id">
+      <button @click="onClickTab(tab.name)">
+        {{tab.name}}
+      </button>
     </div>
   </aside>
 </template>
@@ -19,17 +17,17 @@
 export default {
   name: 'IssueNavigator',
   computed: {
-    categories() {
-      return this.$store.state.issues.categories;
+    milestones() {
+      return this.$store.state.issues.milestones;
     },
   },
   methods: {
     onClickTab(v){
-      this.$store.commit('issues/setStateViewCategory', v)
+      this.$store.commit('issues/setStateViewMilestone', v)
     }
   },
   created() {
-    this.$store.dispatch('issues/requestCategories')
+    this.$store.dispatch('issues/requestMilestones')
   }
 }
 </script>

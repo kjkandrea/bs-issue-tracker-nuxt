@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <tr v-for="issue in issues" :key="issue.id" >
-          <template v-if="viewCategory(issue._embedded['wp:term'][0][0].name)">
+          <template v-if="viewMilestone(issue._embedded['wp:term'][0][0].name)">
             <td>
               {{issue.id}}
             </td>
@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     view() {
-      return this.$store.state.issues.viewCategory;
+      return this.$store.state.issues.viewMilestone;
     },
   },
   data() {
@@ -64,7 +64,7 @@ export default {
     }
   },
   methods: {
-    viewCategory(v) {
+    viewMilestone(v) {
       if(this.view === 'all'){
         return true
       }else if(this.view === v){
