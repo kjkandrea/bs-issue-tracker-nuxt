@@ -61,6 +61,7 @@ export const actions = {
       let res = await this.$axios.post('/v2/issue', { 
         title: payload.title,
         content: payload.content,
+        milestones: 7,
         status: 'publish'
       }, {
         headers: { 'Authorization': 'Basic YW5kcmVhOlF4RmIgN3V3biAzRHlYIHZkSVAgRDFOeSA2OTRC' }
