@@ -66,8 +66,10 @@ export const actions = {
         milestones: 7,
         status: 'publish'
       }, {
-        headers: { 'Authorization': 'Basic YW5kcmVhOlF4RmIgN3V3biAzRHlYIHZkSVAgRDFOeSA2OTRC' }
-      })
+        headers: { 'Authorization': TEST_KEY }
+      });
+      console.log(res)
+      this.$router.push({name: 'issue-id',  params: { id: res.data.id }})
     } catch(err) {
       console.log(err)
     }
